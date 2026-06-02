@@ -11,6 +11,7 @@ export class CjkQuarantineStream extends Transform {
   private readonly delimiters: string[];
 
   constructor(options: QuarantineOptions = {}) {
+    // 부모 클래스(Transform)의 스트림 생성자 버퍼 명시적 동기화
     super({ objectMode: true });
     this.maxBufferSize = options.maxBufferSize || 65536;
     this.delimiters = options.delimiters || ["\n", "\r", "\x03", "\x04"];
@@ -22,6 +23,7 @@ export class CjkQuarantineStream extends Transform {
       const normalized = rawString.normalize("NFC");
 
       if (this.buffer.length + normalized.length > this.maxBufferSize) {
+        // 부모의 emit 메서드를 안전하게 호출하여 버퍼 오버플로우 에러 방출
         this.emit("error", new Error("BufferOverflow: CJK Quarantine Guard Triggered."));
         this.clear();
         return callback();
@@ -54,6 +56,7 @@ export class CjkQuarantineStream extends Transform {
       const verifiedChunk = this.buffer.slice(0, endPosition);
       this.buffer = this.buffer.slice(endPosition);
 
+      // 무결한 청크를 하위 PTY 파이프라인으로 안전하게 밀어넣기
       this.push(verifiedChunk);
     }
   }
