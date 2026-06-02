@@ -1,0 +1,43 @@
+{
+  "name": "cjkime",
+  "version": "1.0.0",
+  "description": "CJK IME input for web terminals",
+  "main": "dist/core/quarantine.js",
+  "types": "dist/core/quarantine.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/core/quarantine.d.ts",
+      "import": "./dist/core/quarantine.js",
+      "require": "./dist/core/quarantine.js"
+    },
+    "./adapters/vanilla": {
+      "types": "./dist/adapters/vanilla-sandbox.d.ts",
+      "import": "./dist/adapters/vanilla-sandbox.js",
+      "require": "./dist/adapters/vanilla-sandbox.js"
+    }
+  },
+  "files": [
+    "dist",
+    "adapters/vue3-sandbox.vue",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "cjk",
+    "ime",
+    "xterm",
+    "terminal",
+    "pty",
+    "ssh",
+    "korean",
+    "input-buffer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
